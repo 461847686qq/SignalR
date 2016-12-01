@@ -1,0 +1,135 @@
+﻿
+@{
+    Layout = null;
+}
+<link href="~/Content/chat.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+<script src="~/Scripts/signalr-chat.js"></script>
+<div style="height:100%;padding-bottom:500px;">
+    <div style="width:70%;border:1px solid gray;text-align:center;height:auto;">
+        <h2>SignalR</h2>
+        <input type="text" class="chat-nick" id="chat-nick" placeholder="请输入你的昵称" />
+        <hr />
+        <ul class="box-ul">
+            <li class="signal-type connectio">
+                <div class="title">
+                    <span>PersistentConnection</span>
+                </div>
+                <div class="content">
+                    <ul class="messages" id="messages-connection"></ul>
+                    <div class="send-btn-box">
+                        <input type="text" id="msg" class="input-msg" placeholder="输入聊天内容" />
+                        <input type="button" id="broadcast" value="发送" />
+                        <input type="button" id="btnStop" value="停止" />
+                    </div>
+                </div>
+            </li>
+            <li class="signal-type hub">
+                <div class="title">
+                    <span>Hub</span>
+                </div>
+                <div class="content">
+                    <ul class="messages" id="messages-hub"></ul>
+                    <div class="send-btn">
+                        <input type="text" class="input-msg" id="message" placeholder="输入聊天内容" />
+                        <input type="button" id="sentBtn" value="发送" />
+                        <input type="button" id="btnCancle" value="取消" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div style="clear:both;"></div>
+        <hr />
+        <h3>代码片段</h3>
+        <ul class="box-ul code-ul">
+            <li class="code">
+                <div class="title">
+                    <span>PersistentConnection</span>
+                </div>
+                <p>在项目中用Nuget添加对Microsoft.AspNet.SignalR的引用</p>
+                <p>
+                    1.添加持久连接类<strong>SignalR Persistent Connection Class</strong>，类名为MyConnection，默认继承自PersistentConnection类
+                </p>
+                <p>
+                    2.添加<strong>OWIN Startup类</strong>，用于注册connection和hub
+                </p>
+                <p>
+                    3.在<strong>OWIN Startup类</strong>中注册connection(<code>app.MapConnection<MyConnection>("/myConnection");</code>)
+                </p>
+                <p>
+                    以上步骤是server端的准备工作，下面是client端
+                </p>
+                <p>
+                    4.引入jquery.js和jquery.signalr.js
+                </p>
+                <p>
+                    5.编写client端代码
+                    <blockquote>
+                        <code>
+                            //定义client端对server端的访问connection<br />
+                            var connection = $.connection('/myConnection');<br />
+                            //作为server端OnReceived方法的回调函数<br />
+                            connection.received(function (data) {<br />
+                            &nbsp;&nbsp;alert(data);<br />
+                            });<br />
+                            //打开连接<br />
+                            connection.start();<br />
+                            //发送消息给server端（调用OnReceived方法）<br />
+                            connection.send(info);<br />
+                            //断开连接<br />
+                            connection.stop();<br />
+                        </code>
+                    </blockquote>
+                </p>
+                <p>
+                    到此编码完毕，具体需要做什么功能自己自由扩展。
+                </p>
+            </li>
+            <li class="code">
+                <div class="title">
+                    <span>Hub</span>
+                </div>
+                <p>在项目中用Nuget添加对Microsoft.AspNet.SignalR的引用</p>
+                <p>
+                    1.添加集线器类<strong>SignalR Hub Class</strong>，类名为MyHub，默认继承自Hub类
+                </p>
+                <p>
+                    2.添加<strong>OWIN Startup类</strong>，用于注册connection和hub，如果已经添加过了就跳过
+                </p>
+                <p>
+                    3.在<strong>OWIN Startup类</strong>中注册hub(<code>app.MapHubs();</code>)
+                </p>
+                <p>
+                    以上步骤是server端的准备工作，下面是client端
+                </p>
+                <p>
+                    4.引入jquery.js和jquery.signalr.js，另外添加<code> &lt;script src="~/signalr/hubs" type="text/javascript"&gt;&lt;/script&gt;</code>，应用程序启动后会在该目录下生成代理js，作为client端和server端的通信桥梁
+                </p>
+                <p>
+                    5.编写client端代码
+                    <blockquote>
+                        <code>
+                            // 建立对应server端Hub class的对象，请注意myHub的第一个字母要改成小写<br />
+                            var chat = $.connection.myHub;<br />
+                            // 定义client端的javascript function，供server端hub，通过dynamic的方式，调用所有Clients的javascript function<br />
+                            chat.client.sendMessage = function (data) {<br />
+                            //当server端调用sendMessage时，data是server push的message数据<br />
+                            //do something<br />
+                            };<br />
+                            //把connection打开<br />
+                            $.connection.hub.start().done(function () {//do something    });<br />
+                            //发送消息<br />
+                            chat.server.send(msg);<br />
+                        </code>
+                    </blockquote>
+                </p>
+                <p>
+                    到此编码完毕，具体需要做什么功能自己自由扩展。
+                </p>
+            </li>
+        </ul>
+        <div style="clear:both;"></div>
+    </div>
+</div>

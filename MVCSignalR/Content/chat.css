@@ -1,0 +1,36 @@
+﻿    
+
+
+    /*清除ul、li前面的圆点样式*/
+    ul{list-style:none;}
+    /*两个会话框*/    /*两个会话框内部底部高*/
+    .box-ul .signal-type {width:49%;float:left;text-align:center;padding-bottom:100px;}
+    .box-ul .code {width:45%;float:left;margin-left:20px;text-align:left;}
+    .code-ul{padding-bottom:500px;}
+
+    /*呈现聊天消息框（overflow:auto==>滚动条）*/
+    .messages {height:90%;border:1px solid #e6d8e3;background-color:#f9f1f8; margin:2px;border-top-left-radius:4.3px;border-top-right-radius:4.3px;overflow:auto;box-shadow:inset 0 0 10px #f1e2ef;  }
+    /*每条消息都左对齐*/
+    .messages .msg-item{text-align:left;min-height:60px;}
+    /*两种会话标题样式*/
+    .title{text-align:center;line-height:inherit;height:50px;}
+    .title span{font-weight:bold;font-size:18px;color:darkolivegreen;}
+    /*聊天消息框*/
+    .content{clear:both;border:1px solid #e6c3e4;width:90%;height:380px;border-radius:4.3px;}
+    /*输入消息框样式*/
+    .input-msg{width:75%;height:25px;border:none;}
+    /*聊天用户头像*/
+    .messages .msg-item .img-box {width:30px;height:30px;border-radius:5px;float:left;border:0;  }
+    .messages .msg-item .img-box img{width:100%;height:100%;}
+
+    .messages .msg-item .nick-msg {width:89%;float:left;}
+    /*提交消息用户昵称*/
+    .messages .msg-item .nick {  font-size:10px; color:gray;margin-left:10px;max-width:100px; }
+    /*提交消息时间*/
+    .messages .msg-item .time {  font-size:10px; color:gray;margin-left:50px; }
+    /*提交消息内容*/
+    .messages .msg-item .msg {  font-size:20px; margin-left:10px;margin-top:10px; }
+
+    .send-btn-box {clear:both;}
+    .init-msg{font-size:10px;color:gray;text-align:center;margin-top:20px;}
+    .err-tip{border:1px solid red;}
